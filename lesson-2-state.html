@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="build/react.js"></script>
+  <script src="build/JSXTransformer.js"></script>
+</head>
+<body>
+
+  <script type="text/jsx">
+  /*** @jsx React.DOM */
+  var MyComponent = React.createClass({
+    getInitialState: function() {
+        return {
+          name: "cheese",
+          title: "bergurz"
+        };
+    },
+    render: function() {
+      return <h1> Hello my name is {this.state.name} and i am {this.state.title}</h1>;
+    }
+  });
+
+  React.render(<MyComponent />, document.body);
+  </script>
+</body>
+</html>
