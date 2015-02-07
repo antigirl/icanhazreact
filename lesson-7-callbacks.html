@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="build/react.js"></script>
+  <script src="build/JSXTransformer.js"></script>
+</head>
+<body>
+
+  <script type="text/jsx">
+  /*** @jsx React.DOM */
+  var MyComponent = React.createClass({
+    getInitialState: function() {
+        return {
+          counter1: 1,
+          counter2: 2
+        };
+    },
+    increment: function(childComponent) {
+      var counterType = childComponent.props.refz;
+      var updatedVal = parseInt(childComponent.refs[counterType].getDOMNode().innerText) + 1;
+
+      var result = {};
+      result[counterType] = updatedVal;
+
+      this.setState(result);
+    },
+    render: function() {
+      return (
+        <div>
+          <ChildComponent onClick={this.increment} refz="counter1" init={this.state.counter1} />
+          <br/><br/>
+          <ChildComponent onClick={this.increment} refz="counter2" init={this.state.counter2} />
+        </div>
+        );
+    }
+  });
+
+
+  var ChildComponent = React.createClass({
+    handleClick: function () {
+      this.props.onClick(this);
+    },
+    render: function() {
+        return <button onClick={this.handleClick} ref={this.props.refz}> {this.props.init} </button>;
+    }
+  });
+
+
+  React.render(<MyComponent />, document.body);
+  </script>
+</body>
+</html>

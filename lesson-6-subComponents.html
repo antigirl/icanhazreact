@@ -21,7 +21,10 @@
     },
     render: function() {
       return (
+        <div>
           <ChildComponent name={this.state.counter} click={this.increment}/>
+          <ChildComponent name={this.state.counter} click={this.increment}/>
+        </div>
         );
     }
   });
