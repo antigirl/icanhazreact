@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="build/react.js"></script>
+  <script src="build/JSXTransformer.js"></script>
+</head>
+<body>
+
+  <script type="text/jsx">
+  /** @jsx React.DOM */
+  var MyComponent = React.createClass({
+    render: function() {
+      return <h1> Hello {this.props.name} </h1>;
+    }
+  });
+
+  React.render(<MyComponent name="cheese burger" />, document.body);
+  </script>
+</body>
+</html>
