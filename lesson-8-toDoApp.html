@@ -59,7 +59,7 @@ var App = React.createClass({
         var _this = this;
         return (
             <div>
-            <Controls callback={this.addItem}/>
+            <Controls onAddItem={this.addItem}/>
             <ul>
             {this.state.items.map(function(item, i) {
                 if (item.completed === true) {
@@ -87,7 +87,7 @@ var ListItem = React.createClass({
 
 var Controls = React.createClass({
     clickHandler: function() {
-        this.props.callback(this);
+        this.props.onAddItem(this);
         this.refs.input.getDOMNode().value = "";
     },
     render: function() {

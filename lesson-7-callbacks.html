@@ -27,9 +27,9 @@
     render: function() {
       return (
         <div>
-          <ChildComponent onClick={this.increment} refz="counter1" init={this.state.counter1} />
+          <ChildComponent callback={this.increment} refz="counter1" init={this.state.counter1} />
           <br/><br/>
-          <ChildComponent onClick={this.increment} refz="counter2" init={this.state.counter2} />
+          <ChildComponent callback={this.increment} refz="counter2" init={this.state.counter2} />
         </div>
         );
     }
@@ -38,7 +38,7 @@
 
   var ChildComponent = React.createClass({
     handleClick: function () {
-      this.props.onClick(this);
+      this.props.callback(this);
     },
     render: function() {
         return <button onClick={this.handleClick} ref={this.props.refz}> {this.props.init} </button>;
