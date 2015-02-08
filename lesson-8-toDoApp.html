@@ -1,0 +1,106 @@
+<!;DOCTYPE; html>
+<html>
+<head>
+<script src="build/react.js"></script>
+<script src="build/JSXTransformer.js"></script>
+<style>
+ul, li { margin: 10px 0; padding: 0; width: 200px;}
+li {border-bottom: 1px solid black;}
+li.completed span { text-decoration: line-through;}
+input {width: 200px;}
+.listControls {float: right;}
+.listControls a{text-decoration: none;}
+.listControls .done {margin-right: 10px; color: green;}
+.listControls .delete {color: red;}
+</style>
+</head>
+<body>
+
+<script type="text/jsx">
+/*** @jsx React.DOM */
+var App = React.createClass({
+    items: [{
+        text: 'eat some food ye yoke',
+        completed: true
+    }],
+
+    getInitialState: function() {
+        return {
+            items: this.items
+        };
+    },
+
+    addItem: function(item) {
+        var newItem = {text:item.refs.input.getDOMNode().value, completed: false};
+        this.setState({
+            items: this.state.items.concat(newItem)
+        });
+    },
+
+    updateItem: function(item, type) {
+        var index = this.state.items.map( function(items, index) {
+            if(items.text == item.props.text) {
+                return index;
+            }
+        }).filter(isFinite);
+
+        if (type == 'delete') {
+            this.state.items.splice(index, 1)
+        } else if (type == 'done') {
+            this.state.items[index].completed = this.state.items[index].completed ? false: true;
+        }
+
+        this.setState({
+            items: this.state.items
+        });
+    },
+
+    render: function() {
+        var _this = this;
+        return (
+            <div>
+            <Controls callback={this.addItem}/>
+            <ul>
+            {this.state.items.map(function(item, i) {
+                if (item.completed === true) {
+                    var classString = 'completed';
+                }
+                return <ListItem className={classString} text={item.text} onListSelect={this.updateItem} />
+            }, this)}
+            </ul>
+            </div>
+            );
+    }
+});
+
+
+
+var ListItem = React.createClass({
+    clickHandler: function(e) {
+        e.preventDefault();
+        this.props.onListSelect(this, e.target.className);
+    },
+    render: function() {
+        return <li className={this.props.className}><span>{this.props.text}</span> <div className="listControls"><a href="#" className="done" onClick={this.clickHandler}>done</a><a href="#" className="delete" onClick={this.clickHandler}>x</a></div></li>
+    }
+});
+
+var Controls = React.createClass({
+    clickHandler: function() {
+        this.props.callback(this);
+        this.refs.input.getDOMNode().value = "";
+    },
+    render: function() {
+        return (
+            <div>
+            <input type="text" ref="input"/>
+            <button onClick={this.clickHandler}> + </button>
+            </div>
+            );
+    }
+});
+React.render(<App name="cheese burger" />, document.body);
+</script>
+</body>
+</html>
+
