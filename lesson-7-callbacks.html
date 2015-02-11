@@ -17,12 +17,14 @@
     },
     increment: function(childComponent) {
       var counterType = childComponent.props.refz;
-      var updatedVal = parseInt(childComponent.refs[counterType].getDOMNode().innerText) + 1;
+      var counterState = this.state[childComponent.props.refz];
+      var updatedVal = parseInt(counterState) + 1;
 
       var result = {};
       result[counterType] = updatedVal;
 
       this.setState(result);
+
     },
     render: function() {
       return (
